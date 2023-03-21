@@ -97,6 +97,31 @@ glimpse(collapse)
 collapse_yr = collapse %>%
   group_by(stockid) %>%
   filter(collapsed_yet == TRUE) %>%
-  summarize(first_collpased_yr = min(year))
+  summarize(first_collapsed_yr = min(year))
 head(collapse_yr)
 
+
+
+#######################################################
+#class notes 03-21-2023
+
+
+ggplot(data=collapse_yr) +
+  geom_histogram(aes(x=first_collapsed_yr), binwidth=5)
+
+collapse_ts = collapse_yr %>%
+  count(first_collapsed_year_yr)%>%
+  mutate()
+
+
+
+
+#straight from tutorial bc i was behind
+n_stock_assessments = length(unique(collapse$stockid))
+collapse_ts = collapse_yr %>%
+  count(first_collapsed_yr) %>% # Count number of stocks that collapsed each yr
+  mutate(cum_first_collapsed_yr = cumsum(n),
+         ratio_collapsed_yet = cum_first_collapse_yr/n_stock_assessments)
+
+ggplot(data = collapse_ts, aes(x=first_collapse_yr, y=ratio_collapsed_yet)) +
+  geom_line()
